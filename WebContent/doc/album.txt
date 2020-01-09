@@ -1,0 +1,45 @@
+★ 12/04 수업 album 게시판 만들기 
+1. /reboard/write.jsp 를 복사해서 /album/write.jsp 에 붙여넣기
+															  -> 경로변경 / 파일업로드 부분 추가 / form 내용 추가 (밑에 설명)
+2. WebContent 밑에 /upload/album 폴더 만들기 -> 업로드되는 사진 파일 저장용 (* album 밑에 실행하는 날짜(ex;20151204)로 폴더가 자동 생성되고 거기에 사진 저장되게 됨  : 날짜폴더생성은 controller doPost에서 코딩)
+																																																																-> javaseAPI : java.io / File 참고 
+                                        /bbs 						 -> 자료실 파일 저장용
+3. BoardFactory.java에 album Action 들 추가하기
+4. AlbumController.java 코딩하기
+5. AlbumDto.java 코딩하기
+6. AlbumService / AlbumDao 코딩먼저하고 AlbumServiceImpl / AlbumDaoImpl 만들고 코딩하기
+7. com.kitri.board.controller 에 PictureUploadController.java (/picture) 만들고 코딩하기 ->업로드만 단독으로 쓰는 controller라서 Action 따로 사용안하고 controller에서 전부 다 처리.
+     -> init method : GenericServlet으로 생성
+     -> ServletConfig 는 Interface로 servlet 환경정보라서 new 할수없음 
+     		사용법--->>> public void init(ServletConfig config) throws ServletException {
+									String realPath = config.getServletContext().getRealPath("/upload");    
+								}
+
+                                        
+---------------------------------------
+ (TEST 를 위해서 /admin/boardmenu.jsp 의 <a href="${root}/${boardListDto.controller}?act=list&bcode=${boardListDto.bcode}&pg=1"> 부분에서 act값 mvwrite로 바꿔놓기.)
+ 
+ 글쓰기
+** wirte.jsp
+  1. 컨트롤러 이름 변경 (/reboard -> /picture)
+  2. <input type="file">  : 파일업로드하는부분추가
+  3. <form> - method="POST"  ★반드시★
+		        - enctype="multipart/form-data"  추가 >>>> controller에서 지금까지 사용했던 일반적인 HttpServletRequest request 사용 못함. 
+		      													 				  -> 새로운 Servlet 만들어서 사용 (PictureUploadController.java : POST만 사용)
+		  																		  -> 외부 Libraries 필요 :  http://servlets.com/  -> 메뉴에서 com.oreilly.servlet -> Download : cos-26Dec2008.zip  
+		  																		 																															 -> 압축풀기 
+		  																		 																															 -> doc 폴더 : javadata/API/ 에 복사 (doc폴더이름:cosfileupload 로변경 + index.html이름:cosAPI로변경) 		
+		  																		  																															 -> lib 폴더 : cos.jar파일을 boardmvc/WEB-INF/lib/ 에 import하기.	
+		  																		  																															 => 결과 : Servlet (PictureUploadController.java)에서 MultipartRequest 사용가능해짐.
+		  																		  																															        (MultipartRequest 사용 : cosAPI -> com.oreilly.servlet -> MultipartRequest 참고하기)
+ 글쓰기성공
+** writeOk.jsp
+ 1. 컨트롤러 이름 변경 (/reboard -> /album)
+ 2. album.js 만들기 (reboard.js 과 똑같은 이름의 funtion 생성하면 안됨)
+ 3. common/pubilc.jsp 에 album.js 추가 
+ 4. 작성한 글 보기 코딩
+  
+ 글보기
+** view.jsp (reboard/view.jsp 복사해서 사용)
+     -> 컨트롤러 이름 변경 (/reboard -> /album)
+     -> 추가할것:  content 뿌리는곳 위에 업로드한 이미지 뿌리기

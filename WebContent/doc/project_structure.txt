@@ -1,0 +1,160 @@
+kitricafe
+  - src
+    - com.kitri
+      - action
+        Action.java (I)
+        
+      - factory
+        MemberActionFactory.java
+        BoardActionFactory.java
+        BoardAdminActionFactory.java        
+        
+      - util
+      	MovePage.java
+        DBConnection.java
+        DBClose.java
+        PageNavigation.java
+        BoardConstance.java
+        
+      - admin.board.action
+      	CategoryListAction.java
+      	CategoryMakeAction.java
+      	BoardListAction.java
+      	BoardMakeAction.java
+      
+      - admin.board.controller
+        BoardAdminController.java (S : /boardadmin)
+      
+      - admin.board.model
+        BoardTypeDto.java
+        CategoryDto.java
+        BoardListDto.java
+      
+      - admin.board.model.service
+        BoardAdminService.java (I)
+        BoardAdminServiceImpl.java
+      
+      - admin.board.model.dao
+      	BoardAdminDao.java (I)
+        BoardAdminDaoImpl.java
+      
+      - album.action
+        AlbumWriteAction.java
+        AlbumListAction.java
+        AlbumViewAction.java
+        AlbumGetArticleAction.java
+        AlbumModifyAction.java
+        AlbumDeleteAction.java
+      
+      - bbs.action
+      	BbsWriteAction.java
+        BbsListAction.java
+        BbsViewAction.java
+        BbsGetArticleAction.java
+        BbsModifyAction.java
+        BbsDeleteAction.java
+      
+      - board.action
+      	BoardWriteAction.java
+        BoardListAction.java
+        BoardViewAction.java
+        BoardGetArticleAction.java
+        BoardModifyAction.java
+        BoardDeleteAction.java
+      
+      - reboard.action
+      	ReboardWriteAction.java
+      	ReboardReplyAction.java
+        ReboardListAction.java
+        ReboardViewAction.java
+        ReboardGetArticleAction.java
+        ReboardModifyAction.java
+        ReboardDeleteAction.java
+        
+      - memo.action
+      	MemoWriteAction.java
+        MemoListAction.java
+        MemoModifyAction.java
+        MemoDeleteAction.java
+      
+      - board.controller
+      	AlbumController.java (S : /album)
+      	BbsController.java (S : /bbs)
+      	BoardController.java (S : /board)
+      	ReboardController.java (S : /reboard)
+      	MemoController.java (S : /memo)
+      
+      - board.model
+      	BoardDto.java
+      	AlbumDto.java
+      	ReboardDto.java
+      	BbsDto.java
+      	MemoDto.java      
+      
+      - board.model.dao
+      	AlbumDao.java (I)
+      	AlbumDaoImpl.java
+      	BoardDao.java (I)
+      	BoardDaoImpl.java
+      	BbsDao.java (I)
+      	BbsDaoImpl.java
+      	ReboardDao.java (I)
+      	ReboardDaoImpl.java
+      	MemoDao.java (I)
+      	MemoDaoImpl.java
+      
+      - board.model.service 
+      	AlbumService.java (I)
+      	AlbumServiceImpl.java
+      	BoardService.java (I)
+      	BoardServiceImpl.java
+      	BbsService.java (I)
+      	BbsServiceImpl.java
+      	ReboardService.java (I)
+      	ReboardServiceImpl.java
+      	MemoService.java (I)
+      	MemoServiceImpl.java     
+      
+      - member.action
+        IdCheckAction.java
+        ZipSearchAction.java
+        RegisterAction.java
+        LoginAction.java
+        LogoutAction.java
+        MemberInfoAction.java
+        ModifyAction.java
+        DeleteAction.java
+        
+      - member.controller
+        MemberController.java (S : /user)
+        
+      - member.model
+        MemberDto.java
+        MemberDetailDto.java
+        ZipCodeDto.java
+        
+      - member.model.service
+        MemberService.java (I)
+        MemberServiceImpl.java
+       
+      - member.model.dao
+        MemberDao.java (I)
+        MemberDaoImpl.java
+  
+  - webContent
+    - doc
+    - member
+      - member.jsp
+      - registerok.jsp
+      - registerfail.jsp
+      - login.jsp
+      - loginok.jsp
+      - loginfail.jsp
+      - modify.jsp
+    
+    - board
+  
+  
+  
+  
+  
