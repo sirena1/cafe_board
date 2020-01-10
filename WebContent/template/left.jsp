@@ -24,7 +24,6 @@ $(document).ready(function() {
 		/* 컨트롤러를 가야 한다. */
 		var bcode = $(this).attr('data-bcode'); 
 		var control = $(this).attr('data-control'); 
-		alert(bcode + "         " + control);
 		var url = '${root}/' + control + '?act=mvwrite&bcode=' + bcode + "&pg=1&key=&word=";
 		$(location).attr('href',url);
 	});

@@ -1,11 +1,10 @@
 package com.kitri.board.controller;
 
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+
+import javax.servlet.*;
+import javax.servlet.annotation.*;
+import javax.servlet.http.*;
 
 import com.kitri.factory.*;
 import com.kitri.util.*;
@@ -21,7 +20,8 @@ public class ReboardController extends HttpServlet {
 		int pg = ValidateCheck.nullToOne(request.getParameter("pg"));
 		String key = ValidateCheck.nullToBlank(request.getParameter("key"));
 		String word = ValidateCheck.nullToBlank(request.getParameter("word"));
-		
+		String queryString = "?bcode=" + bcode + "&pg=" + pg + "&key=" + key + "&word=" + word;
+				
 		String path = "/index.jsp";
 		
 		String act = request.getParameter("act");
@@ -29,10 +29,16 @@ public class ReboardController extends HttpServlet {
 		if("list".equals(act)) {
 			
 		} else if("mvwrite".equals(act)) {
-			path = "/reboard/write.jsp?bcode=" + bcode + "&pg=" + pg + "&key=" + key + "&word=" + word;
+			path = "/reboard/write.jsp" + queryString;
 			MovePage.redirect(request, response, path);
 		} else if("write".equals(act)) {
 			path = BoardActionFactory.getReboardWriteAction().execute(request, response);
+			if(path.contains("writeok")) {
+				path += queryString;
+				MovePage.forward(request, response, path);
+			} else {
+				MovePage.redirect(request, response, path);
+			}
 		} else if("".equals(act)) {
 			
 		} else if("".equals(act)) {

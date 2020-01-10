@@ -3,6 +3,7 @@ package com.kitri.board.model.service;
 import java.util.*;
 
 import com.kitri.board.model.*;
+import com.kitri.board.model.dao.*;
 
 public class ReboardServiceImpl implements ReboardService {
 
@@ -25,7 +26,11 @@ public class ReboardServiceImpl implements ReboardService {
 
 	@Override
 	public int writeArticle(ReboardDto reboardDto) {
-		return 0;
+		int seq = CommonServiceImpl.getCommonService().getNextSeq();
+		reboardDto.setSeq(seq);
+		reboardDto.setRef(seq);
+		int cnt = ReboardDaoImpl.getReboardDao().writeArticle(reboardDto);
+		return cnt != 0? seq : 0;
 	}
 
 	@Override

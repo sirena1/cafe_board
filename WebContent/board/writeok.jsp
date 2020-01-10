@@ -11,7 +11,7 @@
     	<h3 style="padding-left: 15px; padding-bottom: 10px;">글쓰기</h3>
     	<div class="container" style="width: 80%;">
 			
-			글작성 성공
+			글작성 성공 >>>>>>>>>>>>>>>>>>>>>>> ${seq}
 			<br><br>
 	  
       		<button type="button" id="myArticleBtn" class="btn btn-primary">내가쓴글보기</button>
