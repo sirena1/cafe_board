@@ -1,8 +1,10 @@
 package com.kitri.admin.board.model.dao;
 
+import java.sql.*;
 import java.util.*;
 
 import com.kitri.admin.board.model.*;
+import com.kitri.util.*;
 
 public class BoardAdminDaoImpl implements BoardAdminDao {
 	//2.
@@ -20,7 +22,36 @@ public class BoardAdminDaoImpl implements BoardAdminDao {
 		
 	@Override
 	public List<BoardListDto> menuList() {
-		return null;
+		List<BoardListDto> list = new ArrayList<BoardListDto>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn= DBConnection.getConnection();
+			StringBuilder sql = new StringBuilder();
+			sql.append("select bl.bcode, bl.bname, bl.btcode,\n");
+			sql.append("		c.ccode, c.cname \n");
+			sql.append("from board_list bl, category c \n");
+			sql.append("where bl.ccode = c.ccode \n");
+			sql.append("order by c.ccode, bl.bcode \n");
+			pstmt = conn.prepareStatement(sql.toString());
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				BoardListDto boardListDto = new BoardListDto();
+				boardListDto.setBcode(rs.getInt("bcode"));
+				boardListDto.setBname(rs.getString("bname"));
+				boardListDto.setBtcode(rs.getInt("btcode"));
+				boardListDto.setCcode(rs.getInt("ccode"));
+				boardListDto.setCname(rs.getString("cname"));
+				
+				list.add(boardListDto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		return list;
 	}
 
 	@Override

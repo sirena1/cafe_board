@@ -3,6 +3,7 @@ package com.kitri.admin.board.model.service;
 import java.util.*;
 
 import com.kitri.admin.board.model.*;
+import com.kitri.admin.board.model.dao.*;
 
 public class BoardAdminServiceImpl implements BoardAdminService{
 
@@ -20,7 +21,7 @@ public class BoardAdminServiceImpl implements BoardAdminService{
 	
 	@Override
 	public List<BoardListDto> menuList() {
-		return null;
+		return BoardAdminDaoImpl.getBoardAdminDao().menuList();
 	}
 
 	@Override

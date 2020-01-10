@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kitri.factory.*;
 import com.kitri.util.BoardConstance;
 
 @WebServlet("/boardadmin")
@@ -20,8 +21,8 @@ public class BoardAdminController extends HttpServlet {
 		
 		String act = request.getParameter("act");
 		
-		if("".equals(act)) {
-			
+		if("index".equals(act)) {
+			path = BoardAdminActionFactory.getBoardMenuListAction().execute(request, response);
 		} else if("".equals(act)) {
 			
 		} else if("".equals(act)) {

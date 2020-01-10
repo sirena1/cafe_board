@@ -1,11 +1,10 @@
 package com.kitri.admin.board.model;
 
-public class BoardListDto {
+public class BoardListDto extends CategoryDto{
 
 	private int bcode;
 	private String bname;
 	private int btcode;
-	private int ccode;
 	
 	public int getBcode() {
 		return bcode;
@@ -25,10 +24,5 @@ public class BoardListDto {
 	public void setBtcode(int btcode) {
 		this.btcode = btcode;
 	}
-	public int getCcode() {
-		return ccode;
-	}
-	public void setCcode(int ccode) {
-		this.ccode = ccode;
-	}
+	
 }

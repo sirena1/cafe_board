@@ -2,8 +2,7 @@
     pageEncoding="UTF-8" import="com.kitri.member.model.MemberDto"%>
 <%@ include file="/template/top.jsp" %>
 <c:if test="${userInfo != null}">
-<font size="15" color="steelblue">${userInfo.name}(${userInfo.id})님 안녕하세요.</font>
-<br><a href="${root}/user?act=maillist">메일보기</a>
+<font size="15" color="steelblue">${userInfo.ename}(${userInfo.empno})님 안녕하세요.</font>
 <br><a href="${root}/user?act=logout">로그아웃</a>
 </c:if>
 <c:if test="${userInfo == null}">
