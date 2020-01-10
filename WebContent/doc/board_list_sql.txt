@@ -1,0 +1,14 @@
+select bl.bcode, bl.bname, b1.btcode,
+		c.cocde, c.cname
+		case 
+			when bl.btcode = 5
+			then 'reboard'
+			when bl.btcode = 6
+			then 'album'
+			when bl.btcode = 7
+			then 'bbc'
+			else 'board'
+		end control
+from board_list bl, category c
+where b1.ccode = c.ccode
+order by c.ccode, bl.bcode;

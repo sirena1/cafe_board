@@ -16,8 +16,12 @@ public class BoardMenuListAction implements Action{
 	public String execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		List<BoardListDto> list = BoardAdminServiceImpl.getBoardAdminService().menuList();
-		System.out.println(">>>>>>>>" + list.size());
-		return null;
+//		System.out.println(">>>>>>>>" + list.size());
+		//request는 다음 페이지로 넘어가면 사라진다.
+		//application으로 만들기
+		ServletContext application = request.getServletContext();
+		application.setAttribute("menu", list);
+		return "/main.jsp";
 	}
 
 }
