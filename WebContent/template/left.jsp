@@ -22,8 +22,11 @@ $(document).ready(function() {
 	
 	$(".movelist").click(function() {
 		/* 컨트롤러를 가야 한다. */
-		var url = '${root}/'
-		$(location).attr('href','');
+		var bcode = $(this).attr('data-bcode'); 
+		var control = $(this).attr('data-control'); 
+		alert(bcode + "         " + control);
+		var url = '${root}/' + control + '?act=mvwrite&bcode=' + bcode + "&pg=1&key=&word=";
+		$(location).attr('href',url);
 	});
 });
 </script>
@@ -43,7 +46,7 @@ $(document).ready(function() {
                   <ul>
          </c:if>
                      <li style="margin-left: 2%">
-                        <a href="" class="movelist" style="font-size: 10pt">${board.bname}</a>
+                        <a href="#" class="movelist" style="font-size: 10pt" data-control="${board.control}" data-bcode="${board.bcode}">${board.bname}</a>
                      </li>
          <c:if test="${i.index < menu.size()-1}">
             <c:if test="${cflag != menu.get(i.index + 1).ccode }">

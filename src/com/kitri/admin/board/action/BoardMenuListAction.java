@@ -23,5 +23,4 @@ public class BoardMenuListAction implements Action{
 		application.setAttribute("menu", list);
 		return "/main.jsp";
 	}
-
 }

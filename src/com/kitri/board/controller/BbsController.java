@@ -20,8 +20,8 @@ public class BbsController extends HttpServlet {
 		
 		String act = request.getParameter("act");
 		
-		if("".equals(act)) {
-			
+		if("list".equals(act)) {
+			System.out.println("자료실목록!!!!");
 		} else if("".equals(act)) {
 			
 		} else if("".equals(act)) {

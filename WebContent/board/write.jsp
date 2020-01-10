@@ -32,6 +32,4 @@
       		<button type="submit" class="btn btn-primary">글작성</button>
 	  		<button type="reset" class="btn btn-warning">초기화</button>
 		</div>
-
-
 <%@ include file="/template/bottom.jsp" %>

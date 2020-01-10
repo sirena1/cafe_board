@@ -20,8 +20,8 @@ public class AlbumController extends HttpServlet {
 		
 		String act = request.getParameter("act");
 		
-		if("".equals(act)) {
-			
+		if("list".equals(act)) {
+			System.out.println("앨범목록!!!!");
 		} else if("".equals(act)) {
 			
 		} else if("".equals(act)) {

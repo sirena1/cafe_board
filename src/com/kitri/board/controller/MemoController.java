@@ -20,8 +20,8 @@ public class MemoController extends HttpServlet {
 		
 		String act = request.getParameter("act");
 		
-		if("".equals(act)) {
-			
+		if("list".equals(act)) {
+			System.out.println("메모목록!!!!");
 		} else if("".equals(act)) {
 			
 		} else if("".equals(act)) {
