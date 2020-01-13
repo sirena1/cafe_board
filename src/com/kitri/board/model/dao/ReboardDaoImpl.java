@@ -22,7 +22,58 @@ public class ReboardDaoImpl implements ReboardDao {
 	
 	@Override
 	public List<ReboardDto> listArticle(Map<String, String> map) {
-		return null;
+		List<ReboardDto> list = new ArrayList<ReboardDto>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBConnection.getConnection();
+			StringBuilder sql = new StringBuilder();
+			sql.append("select a.*\n");
+			sql.append("from (\n");
+			sql.append("        select RANK() OVER(ORDER BY b.seq DESC ) rank,\n");
+			sql.append("                b.seq, b.name, b.id, b.email, b.subject, b.content, b.hit, b.bcode,\n");
+			sql.append("                case when trunc(b.logtime, 'dd')=trunc(sysdate, 'dd')\n");
+			sql.append("                       then to_char(b.logtime, 'hh24:mi:ss')\n");
+			sql.append("                       else to_char(b.logtime, 'yy.mm.dd')\n");
+			sql.append("               end as logtime, r.rseq, r.ref, r.lev, r.step, r.pseq, r.reply\n");
+			sql.append("        from board b, reboard r\n");
+			sql.append("        where b.seq = r.seq\n");
+			sql.append("		and bcode=?\n");
+			sql.append("     ) a\n");
+			sql.append("where a.rank > ? and a.rank <= ? \n");
+			pstmt = conn.prepareStatement(sql.toString());	
+//			System.out.println(sql.toString()); //쿼리문 찍어보기
+			pstmt.setInt(1, Integer.parseInt(map.get("bcode")));
+			pstmt.setInt(2, Integer.parseInt(map.get("start")));
+			pstmt.setInt(3, Integer.parseInt(map.get("end")));
+			rs = pstmt.executeQuery();
+			while(rs.next()) { //있을 수도 있고 없을 수도 있기 때문에
+				ReboardDto reboardDto = new ReboardDto();
+				reboardDto.setSeq(rs.getInt("seq"));
+				reboardDto.setId(rs.getString("id"));
+				reboardDto.setName(rs.getString("name"));
+				reboardDto.setEmail(rs.getString("email"));
+				reboardDto.setSubject(rs.getString("subject"));
+				reboardDto.setContent(rs.getString("content"));
+				reboardDto.setHit(rs.getInt("hit"));
+				reboardDto.setLogtime(rs.getString("logtime"));
+				reboardDto.setBcode(rs.getInt("bcode"));
+				reboardDto.setRseq(rs.getInt("rseq"));
+				reboardDto.setRef(rs.getInt("ref"));
+				reboardDto.setLev(rs.getInt("lev"));
+				reboardDto.setStep(rs.getInt("step"));
+				reboardDto.setPseq(rs.getInt("pseq"));
+				reboardDto.setReply(rs.getInt("reply"));
+				
+				list.add(reboardDto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}	
+		return list;
 	}
 
 	@Override

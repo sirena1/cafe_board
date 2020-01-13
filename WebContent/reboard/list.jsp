@@ -6,6 +6,12 @@
 			<h3 style="padding-left: 15px; padding-bottom: 10px;">자유게시판</h3>
 			<div class="container" align="center">
 				<table>
+				<tr>
+					<td colspan="5" style="text-align: rigth;">
+					새글 <strong>100</strong>/전체글 <strong>100</strong>
+					</td>
+				</tr>
+				</table>
 				<thead>
 				<tr>
 					<th>번호</th>
@@ -27,7 +33,13 @@
 					</c:forEach>
 				</tbody>
 				</table>
-	
+				<table>
+				<tr>
+					<td colspan="5" style="text-align: rigth;">
+					현재 <strong>100</strong>/전체글 <strong>100</strong> pages
+					</td>
+				</tr>
+				</table>
 	 			<div class="input-group" style="padding-top: 15px; width: 60%">
 	 	 			<select name="key" id="key" class="custom-select mb-3">
 					    <option value="subject">제목</option>
