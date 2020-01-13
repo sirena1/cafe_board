@@ -1,23 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/template/top.jsp" %>
+<%@ include file="/template/common/logincheck.jsp" %>
+<%@ include file="/template/common/board.jsp" %>
+
+<c:if test="${article == null}">
+<script>
+alert("글이 삭제 되었거나 잘못된 URL 접근입니다.");
+$(location).attr("href", "${root}/")
+</script>
+</c:if>
 
     		<h3 style="padding-left: 15px; padding-bottom: 10px;">글보기</h3>
       		<div class="container" align="center" style="width: 80%;">
 	  			<div class="form-group" align="left">
 	  				<table>
 				  		<tr>
-				  			<td style="text-align: left;" colspan="3"><strong>글번호. 제목인거시여</strong></th>
+				  			<td style="text-align: left;" colspan="3"><strong>${article.seq}. ${article.subject}</strong></th>
 				  		</tr>
 				  		<tr>
-				  			<td>작성자</td>
-				  			<td>조회수 : 0</td>
-				  			<td>작성일 : 20.01.07</td>				  			
+				  			<td>${article.name}</td>
+				  			<td>조회수 : ${article.hit}</td>
+				  			<td>작성일 : ${article.logtime}</td>				  			
 				  		</tr>
 				  	</table>
 				</div>
 	  			<div class="form-group" align="left">
-	  				<p>내용에 들어갈 내용</p>
+	  				<p>${article.content}</p>
 	    		</div>	
 	    		<br>  
 	  			<div align="center">

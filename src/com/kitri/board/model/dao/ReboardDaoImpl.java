@@ -66,7 +66,46 @@ public class ReboardDaoImpl implements ReboardDao {
 
 	@Override
 	public ReboardDto viewArticle(int seq) {
-		return null;
+		ReboardDto reboardDto = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBConnection.getConnection();
+			StringBuilder sql = new StringBuilder();
+			sql.append("select b.seq, b.id, b.name, b.email, b.subject, b.content, b.hit, \n");
+			sql.append("	b.logtime, b.bcode, r.rseq, r.ref, r.lev, r.step, r.pseq, r.reply \n");
+			sql.append("from board b, reboard r\n");
+			sql.append("where b.seq = r.seq \n");
+			sql.append("and b.seq = ? \n");
+			pstmt = conn.prepareStatement(sql.toString());	
+//			System.out.println(sql.toString()); //쿼리문 찍어보기
+			pstmt.setInt(1,seq);
+			rs = pstmt.executeQuery();
+			if(rs.next()) { //있을 수도 있고 없을 수도 있기 때문에
+				reboardDto = new ReboardDto();
+				reboardDto.setSeq(rs.getInt("seq"));
+				reboardDto.setId(rs.getString("id"));
+				reboardDto.setName(rs.getString("name"));
+				reboardDto.setEmail(rs.getString("email"));
+				reboardDto.setSubject(rs.getString("subject"));
+				reboardDto.setContent(rs.getString("content"));
+				reboardDto.setHit(rs.getInt("hit"));
+				reboardDto.setLogtime(rs.getString("logtime"));
+				reboardDto.setBcode(rs.getInt("bcode"));
+				reboardDto.setRseq(rs.getInt("rseq"));
+				reboardDto.setRef(rs.getInt("ref"));
+				reboardDto.setLev(rs.getInt("lev"));
+				reboardDto.setStep(rs.getInt("step"));
+				reboardDto.setPseq(rs.getInt("pseq"));
+				reboardDto.setReply(rs.getInt("reply"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}		
+		return reboardDto;
 	}
 
 	@Override

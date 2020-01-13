@@ -40,7 +40,8 @@ public class ReboardServiceImpl implements ReboardService {
 
 	@Override
 	public ReboardDto viewArticle(int seq) {
-		return null;
+		//db가기
+		return ReboardDaoImpl.getReboardDao().viewArticle(seq);
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/template/top.jsp" %>
+<%@ include file="/template/common/board.jsp" %>
 
 			<h3 style="padding-left: 15px; padding-bottom: 10px;">자유게시판</h3>
 			<div class="container" align="center">
