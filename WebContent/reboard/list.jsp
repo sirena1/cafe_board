@@ -2,16 +2,29 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/template/top.jsp" %>
 <%@ include file="/template/common/board.jsp" %>
+<script>
+$(document).ready(function(){
+	$("#writeBtn").click(function() {
+		$("#act").val("mvwrite");
+		$("#pg").val("1");
+		$("#key").val("");
+		$("#word").val("");
+		$("#commonform").submit();
+	
+	});
+});
+</script>
 
 			<h3 style="padding-left: 15px; padding-bottom: 10px;">자유게시판</h3>
 			<div class="container" align="center">
 				<table>
 				<tr>
 					<td colspan="5" style="text-align: rigth;">
-					새글 <strong>100</strong>/전체글 <strong>100</strong>
+					새글 <strong>${navigator.newArticleCount}</strong>/전체글 <strong>${navigator.totalArticleCount}</strong>
 					</td>
 				</tr>
 				</table>
+				<table>
 				<thead>
 				<tr>
 					<th>번호</th>
@@ -22,13 +35,13 @@
 				</tr>
 				</thead>
 				<tbody>
-					<c:forEach varStatus="i" begin="0" end="20">
+					<c:forEach var="article" items="${articleList}">
 					<tr>
-						<td>${i.count}</td>
-						<td class="alsubject">제목입니다.</td>
-						<td>작성자</td>
-						<td>조회수</td>
-						<td>날짜</td>
+						<td>${article.seq}</td>
+						<td class="alsubject">${article.subject}</td>
+						<td>${article.name}</td>
+						<td>${article.hit}</td>
+						<td>${article.logtime}</td>
 					</tr>
 					</c:forEach>
 				</tbody>
@@ -36,7 +49,7 @@
 				<table>
 				<tr>
 					<td colspan="5" style="text-align: rigth;">
-					현재 <strong>100</strong>/전체글 <strong>100</strong> pages
+					현재 <strong>${navigator.pageNo}</strong>/전체글 <strong>${navigator.totalPageCount}</strong> pages
 					</td>
 				</tr>
 				</table>
@@ -53,20 +66,7 @@
 				 	<button type="button" id="writeBtn" class="btn btn-success" style="background-color:gray; border-color: gray;	width: 80px; height: 40px; font-size: 15px;">글쓰기</button>
 				</div>
 	
-				<div class="pagination" style="padding-top: 10px">
-					<a href="#">&laquo;</a>
-					<c:forEach varStatus="i" begin="0" end="10">
-						<c:choose>
-							<c:when test="${i.index == 3}">
-								<a href="#" class="active" >${i.count}</a>
-							</c:when>
-							<c:otherwise>
-								<a href="#">${i.count}</a>
-						  	</c:otherwise>
-						</c:choose>
-					</c:forEach>
-					<a href="#">&raquo;</a>
-				</div>
+				${navigator.navigator}
   			</div>
 <%@ include file="/template/bottom.jsp" %>
 	   		

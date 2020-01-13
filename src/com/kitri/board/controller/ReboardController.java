@@ -28,6 +28,7 @@ public class ReboardController extends HttpServlet {
 		
 		if("list".equals(act)) {
 			path = BoardActionFactory.getReboardListAction().execute(request, response);
+			MovePage.forward(request, response, path);
 		} else if("mvwrite".equals(act)) {
 			path = "/reboard/write.jsp" + queryString;
 			MovePage.redirect(request, response, path);

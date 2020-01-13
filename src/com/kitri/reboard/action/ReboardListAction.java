@@ -23,9 +23,15 @@ public class ReboardListAction implements Action {
 		String key = ValidateCheck.nullToBlank(request.getParameter("key"));
 		String word = ValidateCheck.nullToBlank(request.getParameter("word"));
 		List<ReboardDto> list = ReboardServiceImpl.getReboardService().listArticle(bcode, pg, key, word);
-		System.out.println("list>>>>>>>>" + list.size());
-		return null;
+//		System.out.println("list>>>>>>>>" + list.size());
+		request.setAttribute("articleList", list);
+		
+		PageNavigation navigation = CommonServiceImpl.getCommonService().getPageNavigation(bcode, pg, key, word);
+		navigation.setRoot(request.getContextPath());
+		navigation.makeNavigator();
+		request.setAttribute("navigator", navigation);
+		
+		return "/reboard/list.jsp";
 	}
-
 }
 

@@ -70,7 +70,7 @@ tr:nth-child(even) {background-color: #d9d9d9;}
 </head>
 <body>
 	<nav class="navbar navbar-expand navbar-dark bg-dark static-top">
-		<a class="navbar-brand mr-1" href="home.html">Kitri</a>
+		<a class="navbar-brand mr-1" href="${root}">Kitri</a>
 		<button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
 			<i class="fas fa-bars"></i>
 	    </button>
