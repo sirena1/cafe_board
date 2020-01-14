@@ -51,7 +51,9 @@ public class ReboardServiceImpl implements ReboardService {
 	@Override
 	public ReboardDto viewArticle(int seq) {
 		//db가기
-		return ReboardDaoImpl.getReboardDao().viewArticle(seq);
+		ReboardDto reboardDto = ReboardDaoImpl.getReboardDao().viewArticle(seq);
+		CommonDaoImpl.getCommonDao().updateHit(seq);
+		return reboardDto;
 	}
 
 	@Override

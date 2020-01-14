@@ -17,6 +17,14 @@ $(document).ready(function () {
 		$('#commonform').append(input).submit();
 		
 	});
+	
+	$("#listBtn").click(function() {
+		$("#act").val("list");
+		$("#pg").val("1"); //1페이지로 보내기
+		$("#key").val("");
+		$("#word").val("");
+		$("#commonform").submit();	
+	});
 });
 </script>
     	<h3 style="padding-left: 15px; padding-bottom: 10px;">글쓰기</h3>

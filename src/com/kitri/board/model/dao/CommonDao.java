@@ -7,4 +7,5 @@ public interface CommonDao {
 	int getNextSeq();
 	int getNewArticleCount(int bcode);
 	int getTotalArticleCount(Map<String, String> map);
+	void updateHit(int seq);
 }

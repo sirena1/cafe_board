@@ -21,6 +21,7 @@ public class CommonServiceImpl implements CommonService {
 	
 	@Override
 	public int getNextSeq() {
+		
 		return CommonDaoImpl.getCommonDao().getNextSeq();
 	}
 

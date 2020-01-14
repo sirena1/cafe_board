@@ -40,13 +40,27 @@ public class ReboardDaoImpl implements ReboardDao {
 			sql.append("        from board b, reboard r\n");
 			sql.append("        where b.seq = r.seq\n");
 			sql.append("		and bcode=?\n");
+			
+			String key = map.get("key"); //subject, content, name
+			String word = map.get("word");
+			if(!key.isEmpty() && !word.isEmpty()) {
+				if(key.equals("name"))
+					sql.append("		and name = ? \n");
+				else
+					sql.append("		and " + key + " like '%'||?||'%' \n");
+			}
+			
 			sql.append("     ) a\n");
 			sql.append("where a.rank > ? and a.rank <= ? \n");
 			pstmt = conn.prepareStatement(sql.toString());	
 //			System.out.println(sql.toString()); //쿼리문 찍어보기
-			pstmt.setInt(1, Integer.parseInt(map.get("bcode")));
-			pstmt.setInt(2, Integer.parseInt(map.get("start")));
-			pstmt.setInt(3, Integer.parseInt(map.get("end")));
+			int idx = 0;
+			pstmt.setInt(++idx, Integer.parseInt(map.get("bcode")));
+			if(!key.isEmpty() && !word.isEmpty()) {
+				pstmt.setString(++idx, word);
+			}
+			pstmt.setInt(++idx, Integer.parseInt(map.get("start")));
+			pstmt.setInt(++idx, Integer.parseInt(map.get("end")));
 			rs = pstmt.executeQuery();
 			while(rs.next()) { //있을 수도 있고 없을 수도 있기 때문에
 				ReboardDto reboardDto = new ReboardDto();
@@ -172,5 +186,4 @@ public class ReboardDaoImpl implements ReboardDao {
 	@Override
 	public void deleteArticle(int seq) {
 	}
-
 }

@@ -62,11 +62,12 @@ public class PageNavigation {
 		StringBuilder navigator = new StringBuilder();
 		navigator.append("<div class=\"pagination\" style=\"padding-top: 10px\"> \n");
 		navigator.append("	<a href=\"#\" class=\"firstpage\">&laquo;</a> \n");
+		int prePage = (pageNo - 1) / naviCount * naviCount;
 		if(isNowFirst())
 			navigator.append("	&lsaquo; \n");
 		else
-			navigator.append("	<a href=\"#\" class=\"prepage\">&lsaquo;</a> \n");
-		int startPage = (pageNo - 1) / naviCount * naviCount + 1;
+			navigator.append("	<a href=\"#\" class=\"movepage\" data-page=\"" + prePage + "\">&lsaquo;</a> \n");
+		int startPage = prePage + 1; //전단계 마지막
 		int endPage = startPage + naviCount - 1;
 		if(endPage > totalPageCount)
 			endPage = totalPageCount;
@@ -74,13 +75,13 @@ public class PageNavigation {
 			if(pageNo == i)
 				navigator.append("				<a href=\"#\" class=\"active\">" + i + "</a> \n");
 			else
-				navigator.append("				<a href=\"#\" class=\"movepage\">" + i + "</a> \n");
+				navigator.append("				<a href=\"#\" class=\"movepage\"  data-page=\"" + i + "\">" + i + "</a> \n");
 		}
 		if(isNowEnd())
 			navigator.append("	&rsaquo; \n");
 		else
-			navigator.append("	<a href=\"#\" class=\"nextpage\">&rsaquo;</a> \n");
-		navigator.append("	<a href=\"#\" class=\"lastpage\">&raquo;</a> \n");
+			navigator.append("	<a href=\"#\" class=\"movepage\"  data-page=\"" + (endPage + 1) + "\">&rsaquo;</a> \n");
+		navigator.append("	<a href=\"#\" class=\"movepage\"  data-page=\"" + totalPageCount + "\">&raquo;</a> \n");
 		navigator.append("</div> \n");
 		
 		this.navigator = navigator.toString();

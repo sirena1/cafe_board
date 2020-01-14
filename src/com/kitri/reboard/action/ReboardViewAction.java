@@ -21,6 +21,5 @@ public class ReboardViewAction implements Action {
 		request.setAttribute("article", reboardDto);
 		return "reboard/view.jsp";
 	}
-
 }
 

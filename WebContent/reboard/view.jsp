@@ -10,10 +10,55 @@ alert("글이 삭제 되었거나 잘못된 URL 접근입니다.");
 $(location).attr("href", "${root}/")
 </script>
 </c:if>
-
+<script>
+$(document).ready(function () {
+	$("#newBtn").click(function() { //새글쓰기
+		$("#act").val("mvwrite");
+		$("#pg").val("1");
+		$("#key").val("");
+		$("#word").val("");
+		$("#commonform").submit();	
+	});
+	
+	$("#reBtn").click(function() { 
+		$("#act").val("mvreply");
+		$("#pg").val("1"); //1페이지로 보내기
+		$("#key").val("");
+		$("#word").val("");
+		$("#commonform").submit();	
+	});
+	
+	$("#firstBtn").click(function() {
+		$("#act").val("list");
+		$("#pg").val("1"); 
+		$("#key").val("");
+		$("#word").val("");
+		$("#commonform").submit();	
+	});
+	
+	$("#preBtn").click(function() { 
+		$("#act").val("list");
+		$("#commonform").submit(); 
+	});
+});
+</script>
     		<h3 style="padding-left: 15px; padding-bottom: 10px;">글보기</h3>
       		<div class="container" align="center" style="width: 80%;">
 	  			<div class="form-group" align="left">
+	  				<table>
+	  					<tr>
+	  						<td style="text-align: left;">
+	  						<button type="button" id="newBtn" class="btn btn-secondary">새글</button>
+	  						<button type="button" id="reBtn" class="btn btn-secondary">답글</button>
+	  						<button type="button" id="mvModifyBtn" class="btn btn-secondary btn-sm" >수정</button>
+	  						<button type="button" id="deleteBtn" class="btn btn-secondary btn-sm">삭제</button>
+	  						</td>
+	  						<td style="text-align: right;">
+	  						<button type="button" id="firstBtn" class="btn btn-link">최신목록</button>
+	  						<button type="button" id="preBtn" class="btn btn-link">이전목록</button>
+	  						</td>
+	  					</tr>
+	  				</table>
 	  				<table>
 				  		<tr>
 				  			<td style="text-align: left;" colspan="3"><strong>${article.seq}. ${article.subject}</strong></th>

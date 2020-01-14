@@ -20,8 +20,8 @@ public class ReboardController extends HttpServlet {
 		int pg = ValidateCheck.nullToOne(request.getParameter("pg"));
 		String key = ValidateCheck.nullToBlank(request.getParameter("key"));
 		String word = ValidateCheck.nullToBlank(request.getParameter("word"));
-		String queryString = "?bcode=" + bcode + "&pg=" + pg + "&key=" + key + "&word=" + word;
-				
+		String queryString = "?bcode=" + bcode + "&pg=" + pg + "&key=" + key + "&word=" + Encoder.utfEncode(word);
+		System.out.println("queryString>>>>>>>" + queryString);		
 		String path = "/index.jsp";
 		
 		String act = request.getParameter("act");
