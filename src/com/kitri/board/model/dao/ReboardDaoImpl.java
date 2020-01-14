@@ -49,7 +49,6 @@ public class ReboardDaoImpl implements ReboardDao {
 				else
 					sql.append("		and " + key + " like '%'||?||'%' \n");
 			}
-			
 			sql.append("     ) a\n");
 			sql.append("where a.rank > ? and a.rank <= ? \n");
 			pstmt = conn.prepareStatement(sql.toString());	
@@ -173,13 +172,28 @@ public class ReboardDaoImpl implements ReboardDao {
 		return reboardDto;
 	}
 
-	@Override
-	public ReboardDto getArticle(int seq) {
-		return null;
-	}
 
 	@Override
-	public int modyfyArticle(ReboardDto reboardDto) {
+	public int modifyArticle(ReboardDto reboardDto) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DBConnection.getConnection();
+			StringBuilder sql = new StringBuilder();
+			sql.append("update board \n");
+			sql.append("set subject = ?, content = ? \n");
+			sql.append("where seq = ? \n");
+			pstmt = conn.prepareStatement(sql.toString());			
+			int idx = 0;
+			pstmt.setString(++idx, reboardDto.getSubject());
+			pstmt.setString(++idx, reboardDto.getContent());
+			pstmt.setInt(++idx, reboardDto.getSeq());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt);
+		}
 		return 0;
 	}
 

@@ -10,7 +10,6 @@ public interface ReboardDao {
 	int writeArticle(ReboardDto reboardDto); //글번호 리턴
 	int replyArticle(ReboardDto reboardDto);
 	ReboardDto viewArticle(int seq);
-	ReboardDto getArticle(int seq);
-	int modyfyArticle(ReboardDto reboardDto);
+	int modifyArticle(ReboardDto reboardDto);
 	void deleteArticle(int seq);
 }

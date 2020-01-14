@@ -58,16 +58,17 @@ public class ReboardServiceImpl implements ReboardService {
 
 	@Override
 	public ReboardDto getArticle(int seq) {
-		return null;
+		return ReboardDaoImpl.getReboardDao().viewArticle(seq);
 	}
 
-	@Override
-	public int modyfyArticle(ReboardDto reboardDto) {
-		return 0;
-	}
-
+	
 	@Override
 	public void deleteArticle(int seq) {
+	}
+
+	@Override
+	public int modifyArticle(ReboardDto reboardDto) {
+		return ReboardDaoImpl.getReboardDao().modifyArticle(reboardDto);
 	}
 
 }

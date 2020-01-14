@@ -11,7 +11,7 @@ public interface ReboardService {
 	int replyArticle(ReboardDto reboardDto);
 	ReboardDto viewArticle(int seq);
 	ReboardDto getArticle(int seq);
-	int modyfyArticle(ReboardDto reboardDto);
+	int modifyArticle(ReboardDto reboardDto);
 	void deleteArticle(int seq);
 	
 }

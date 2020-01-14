@@ -40,6 +40,12 @@ $(document).ready(function () {
 		$("#act").val("list");
 		$("#commonform").submit(); 
 	});
+	
+	$("#mvModifyBtn").click(function() {
+		$("#act").val("mvmodify");
+		var input = $('<input>').attr('type', 'hidden').attr('name', 'seq').attr('value', '${article.seq}');
+		$('#commonform').append(input).submit();
+	});
 });
 </script>
     		<h3 style="padding-left: 15px; padding-bottom: 10px;">글보기</h3>
@@ -50,8 +56,10 @@ $(document).ready(function () {
 	  						<td style="text-align: left;">
 	  						<button type="button" id="newBtn" class="btn btn-secondary">새글</button>
 	  						<button type="button" id="reBtn" class="btn btn-secondary">답글</button>
+	  					<c:if test="${userInfo.id == article.id}">
 	  						<button type="button" id="mvModifyBtn" class="btn btn-secondary btn-sm" >수정</button>
 	  						<button type="button" id="deleteBtn" class="btn btn-secondary btn-sm">삭제</button>
+	  					</c:if>
 	  						</td>
 	  						<td style="text-align: right;">
 	  						<button type="button" id="firstBtn" class="btn btn-link">최신목록</button>
