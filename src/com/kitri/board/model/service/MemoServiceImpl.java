@@ -34,7 +34,7 @@ public class MemoServiceImpl implements MemoService {
 
 	@Override
 	public String modifyMemo(MemoDto memoDto) {
-		
+		MemoDaoImpl.getMemoDao().modifyMemo(memoDto);
 		return makeJsonList(memoDto.getSeq());
 	}
 

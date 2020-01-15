@@ -29,13 +29,9 @@ public class MemoController extends HttpServlet {
 			json = BoardActionFactory.getMemoListAction().execute(request, response);
 		} else if("delete".equals(act)) {
 			json = BoardActionFactory.getMemoDeleteAction().execute(request, response);
-		} else if("".equals(act)) {
-			
-		} else if("".equals(act)) {
-			
-		} else {
-			
-		}
+		} else if("modify".equals(act)) {
+			json = BoardActionFactory.getMemoModifyAction().execute(request, response);
+		} 
 		out.print(json); //json을 보내라
 	}
 

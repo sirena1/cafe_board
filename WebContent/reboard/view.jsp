@@ -5,8 +5,8 @@
 
 <c:if test="${article == null}">
 <script>
-alert("글이 삭제 되었거나 잘못된 URL 접근입니다.");
-$(location).attr("href", "${root}/")
+alert("글이 삭제 되었거나 잘못된 URL접근입니다.");
+$(location).attr("href", "${root}/");
 </script>
 </c:if>
 
@@ -32,34 +32,35 @@ $(location).attr("href", "${root}/")
 }
 </style>
 <script>
-$(document).ready(function () {
-	$("#newBtn").click(function() { //새글쓰기
+$(document).ready(function() {
+	
+	$("#newBtn").click(function() {
 		$("#act").val("mvwrite");
 		$("#pg").val("1");
 		$("#key").val("");
 		$("#word").val("");
-		$("#commonform").submit();	
+		$("#commonform").submit();
 	});
 	
-	$("#reBtn").click(function() { 
+	$("#reBtn").click(function() {
 		$("#act").val("mvreply");
-		$("#pg").val("1"); //1페이지로 보내기
+		$("#pg").val("1");
 		$("#key").val("");
 		$("#word").val("");
-		$("#commonform").submit();	
+		$("#commonform").submit();
 	});
 	
 	$("#firstBtn").click(function() {
 		$("#act").val("list");
-		$("#pg").val("1"); 
+		$("#pg").val("1");
 		$("#key").val("");
 		$("#word").val("");
-		$("#commonform").submit();	
+		$("#commonform").submit();
 	});
 	
-	$("#preBtn").click(function() { 
+	$("#preBtn").click(function() {
 		$("#act").val("list");
-		$("#commonform").submit(); 
+		$("#commonform").submit();
 	});
 	
 	$("#reBtn").click(function() {
@@ -84,22 +85,22 @@ $(document).ready(function () {
 	    }
 	});
 	
-	$("#mwriteBtn").click(function(){
+	$("#mwriteBtn").click(function() {
 		var mcontent = $("#mcontent").val();
-		$("#mcontent").val(''); //얻어오자마자 지워라
-		if(mcontent != ''){
+		$("#mcontent").val('');
+		if(mcontent != '') {
 			$.ajax({
 			    url: '${root}/memo',
 			    type: 'POST',
 			    data: {act: 'write', seq: '${article.seq}', mcontent: mcontent},
 			    dataType: 'json',
 			    success: function(data){
-					makeList(data);
+			    	makeList(data);
 			    }
 			});
 		}
 	});
-	/* 동적으로 만들어진 component들은 처리할 수 없다... */
+	
 	$(document).on("click", ".mdeleteBtn", function() {
 		$.ajax({
 		    url: '${root}/memo',
@@ -117,9 +118,30 @@ $(document).ready(function () {
 		$("#div" + mseq).css("display", "none");
 		$("#mdiv" + mseq).css("display", "");
 	});
+	
+	$(document).on("click", ".btn.btn-success.modify", function() {
+		var mseq = $(this).attr("data-mseq");
+		var mcontent = $("#mcontent" + mseq).val();
+		$.ajax({
+		    url: '${root}/memo',
+		    type: 'POST',
+		    data: {act: 'modify', seq: '${article.seq}', mseq: mseq, mcontent: mcontent},
+		    dataType: 'json',
+		    success: function(data){
+		    	makeList(data);
+		    }
+		});
+	});
+	
+	$(document).on("click", ".btn.btn-warning.cancel", function() {
+		var mseq = $(this).attr("data-mseq");
+		$("#div" + mseq).css("display", "");
+		$("#mdiv" + mseq).css("display", "none"); //수정페이지가 안보이게끔
+	});
+	
 });
 
-function makeList(data){ //data가 json이다.
+function makeList(data) { //data가 json이다.
 	var mlist = data.memolist;
 	var len = mlist.length;
 	var list = '';
@@ -127,19 +149,20 @@ function makeList(data){ //data가 json이다.
     	list += '<div id="div' + mlist[i].mseq + '">';
     	list += '	<label class="comment_bar">';
     	list += mlist[i].name + ' (' + mlist[i].mtime + ')';
-    	if('${userInfo.id}' == mlist[i].id){
-    		list += '<a href="#" class="mmodifyBtn" data-mseq="' + mlist[i].mseq +'">수정</a>';
-    		list += '<a href="#" class="mdeleteBtn" data-mseq="' + mlist[i].mseq +'">삭제</a>';
+    	if('${userInfo.id}' == mlist[i].id) {
+    		list += '<a href="#" class="mmodifyBtn" data-mseq="' + mlist[i].mseq + '">수정</a>';
+    		list += '<a href="#" class="mdeleteBtn" data-mseq="' + mlist[i].mseq + '">삭제</a>';
     	}
     	list += '</label>';
     	list += '	<label class="comment">' + mlist[i].mcontent + '</label>';
     	list += '</div>';
     	
-    	list += '<div id="mdiv' + mlist[i].mseq + '" style="display: none">';
-    	list += '<div class="input-group" align="left">';
-    	list += '<textarea class="form-control" rows="3" id="mcontent' + mlist[i].mseq + '">' + mlist[i].mcontent +'</textarea>';
-    	list += '<button type="button" class="btn btn-secondary modify">수정</button>';
-    	list += '<button type="button"  class="btn btn-secondary cancel">취소</button>';
+    	list += '<div id="mdiv' + mlist[i].mseq + '" style="display: none;">';
+    	list += '	<div class="input-group" align="left">';
+    	list += '		<textarea class="form-control" rows="3" id="mcontent' + mlist[i].mseq + '">' + mlist[i].mcontent + '</textarea>';
+    	list += '		<button type="button" class="btn btn-success modify" data-mseq="' + mlist[i].mseq + '">수정</button>';
+    	list += '		<button type="button" class="btn btn-warning cancel" data-mseq="' + mlist[i].mseq + '">취소</button>';
+    	list += '	</div>';
     	list += '</div>';
 	}
 	$("#comment").html(list);
@@ -151,16 +174,16 @@ function makeList(data){ //data가 json이다.
 	  				<table>
 	  					<tr>
 	  						<td style="text-align: left;">
-	  						<button type="button" id="newBtn" class="btn btn-secondary">새글</button>
-	  						<button type="button" id="reBtn" class="btn btn-secondary">답글</button>
-	  					<c:if test="${userInfo.id == article.id}">
-	  						<button type="button" id="mvModifyBtn" class="btn btn-secondary btn-sm" >수정</button>
-	  						<button type="button" id="deleteBtn" class="btn btn-secondary btn-sm">삭제</button>
-	  					</c:if>
+		  						<button type="button" id="newBtn" class="btn btn-secondary">새글</button>
+		  						<button type="button" id="reBtn" class="btn btn-secondary">답글</button>
+		  					<c:if test="${userInfo.id == article.id}">	
+		  						<button type="button" id="mvModifyBtn" class="btn btn-secondary btn-sm">수정</button>
+		  						<button type="button" id="deleteBtn" class="btn btn-secondary btn-sm">삭제</button>
+		  					</c:if>	
 	  						</td>
 	  						<td style="text-align: right;">
-	  						<button type="button" id="firstBtn" class="btn btn-link">최신목록</button>
-	  						<button type="button" id="preBtn" class="btn btn-link">이전목록</button>
+	  							<button type="button" id="firstBtn" class="btn btn-link">최신목록</button>
+	  							<button type="button" id="preBtn" class="btn btn-link">이전목록</button>
 	  						</td>
 	  					</tr>
 	  				</table>
@@ -196,11 +219,10 @@ function makeList(data){ //data가 json이다.
 	  			<div>
 		 		 	<div class="input-group" align="left">
 		      			<textarea class="form-control" rows="3" id="mcontent"></textarea>
-						<button type="button" id="mwriteBtn" class="btn btn-secondary">입력</button>
+						<button type="button" id="mwriteBtn" class="btn btn-info">입력</button>
 					</div>
 	  			</div>
 		  		<div id="comment"></div>
 			</div>
-
 <%@ include file="/template/bottom.jsp" %>
 	   		
