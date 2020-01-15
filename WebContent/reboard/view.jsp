@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/template/top.jsp" %>
 <%@ include file="/template/common/logincheck.jsp" %>
-<%@ include file="/template/common/board.jsp" %>
 
 <c:if test="${article == null}">
 <script>
@@ -10,6 +9,28 @@ alert("글이 삭제 되었거나 잘못된 URL 접근입니다.");
 $(location).attr("href", "${root}/")
 </script>
 </c:if>
+
+<%@ include file="/template/common/board.jsp" %>
+<style>
+.comment_bar {
+
+	background-color: #e6e6e6;
+	padding: 5px;
+	border-radius: 8px;
+	width: 100%; 
+	font-size: 15px;
+	text-align: left;
+}
+
+.comment {
+	
+	width: 100%;
+	font-size: 15px;
+	align-content: left;
+	text-align: left;
+	padding-left: 15px;
+}
+</style>
 <script>
 $(document).ready(function () {
 	$("#newBtn").click(function() { //새글쓰기
@@ -52,7 +73,71 @@ $(document).ready(function () {
 		var input = $('<input>').attr('type', 'hidden').attr('name', 'seq').attr('value', '${article.seq}');
 		$('#commonform').append(input).submit();
 	});
+	
+	$.ajax({
+	    url: '${root}/memo',
+	    type: 'GET',
+	    data: {act: 'list', seq: '${article.seq}'},
+	    dataType: 'json',
+	    success: function(data){
+	    	makeList(data);
+	    }
+	});
+	
+	$("#mwriteBtn").click(function(){
+		var mcontent = $("#mcontent").val();
+		$("#mcontent").val(''); //얻어오자마자 지워라
+		if(mcontent != ''){
+			$.ajax({
+			    url: '${root}/memo',
+			    type: 'POST',
+			    data: {act: 'write', seq: '${article.seq}', mcontent: mcontent},
+			    dataType: 'json',
+			    success: function(data){
+					makeList(data);
+			    }
+			});
+		}
+	});
+	/* 동적으로 만들어진 component들은 처리할 수 없다... */
+	$(document).on("click", ".mdeleteBtn", function() {
+		$.ajax({
+		    url: '${root}/memo',
+		    type: 'GET',
+		    data: {act: 'delete', seq: '${article.seq}', mseq: $(this).attr('data-mseq')},
+		    dataType: 'json',
+		    success: function(data){
+		    	makeList(data);
+		    }
+		});
+	});
 });
+
+function makeList(data){ //data가 json이다.
+	var mlist = data.memolist;
+	var len = mlist.length;
+	var list = '';
+	for(var i=0;i<len;i++) {
+    	list += '<div id="div' + mlist[i].mseq + '">';
+    	list += '	<label class="comment_bar">';
+    	list += mlist[i].name + ' (' + mlist[i].mtime + ')';
+    	if('${userInfo.id}' == mlist[i].id){
+    		list += '<a href="#" class="mmodifyBtn"">수정</a>';
+    		list += '<a href="#" class="mdeleteBtn" data-mseq="' + mlist[i].mseq +'">삭제</a>';
+    	}
+    	list += '</label>';
+    	list += '	<label class="comment">' + mlist[i].mcontent + '</label>';
+    	list += '</div>';
+    	
+    	list += '<div id="mdiv' + mlist[i].mseq + '">';
+    	list += '<div class="input-group" align="left">';
+    	list += '<textarea class="form-control" rows="3" id="mcontent' + mlist[i].mseq + '">' + mlist[i].mcontent +'</textarea>';
+    	list += '<button type="button" class="btn btn-secondary modify">수정</button>';
+    	list += '<button type="button"  class="btn btn-secondary cancel">취소</button>';
+    	list += '</div>';
+	}
+	$("#comment").html(list);
+}
 </script>
     		<h3 style="padding-left: 15px; padding-bottom: 10px;">글보기</h3>
       		<div class="container" align="center" style="width: 80%;">
@@ -103,19 +188,12 @@ $(document).ready(function () {
 					</div>
 	  			</div>
 	  			<div>
-		 		 	<div align="left">
-		      			<input type="text" class="form-control"	placeholder="댓글입력..." name="comment" id="comment"	style="width: 90%; float: left;">
-		      		</div>      			
-	      			<div align="right" style="float: left; padding-left: 10px;">
-						<button class="btn btn-secondary">입력</button>
+		 		 	<div class="input-group" align="left">
+		      			<textarea class="form-control" rows="3" id="mcontent"></textarea>
+						<button type="button" id="mwriteBtn" class="btn btn-secondary">입력</button>
 					</div>
 	  			</div>
-
-		  		<div id="comment">
-		  			<br>
-		  			<label class="comment_bar">손흥민</label>
-		  			<label class="comment">손흥민 골~</label>
-		  		</div>
+		  		<div id="comment"></div>
 			</div>
 
 <%@ include file="/template/bottom.jsp" %>

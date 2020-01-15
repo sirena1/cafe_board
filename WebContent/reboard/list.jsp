@@ -76,8 +76,8 @@ function search(){
 					<c:forEach var="article" items="${articleList}">
 					<tr>
 						<td>${article.seq}</td>
-						<td class="alsubject">
-						<a href="#" class="viewarticle" data-seq="${article.seq}">${article.subject.replace("<","&lt;")}</a>
+						<td class="alsubject"> 
+						<a href="#" class="viewarticle" data-seq="${article.seq}" style="margin-left: ${article.lev * 10}px">${article.subject.replace("<","&lt;")}</a>
 						</td>
 						<td>${article.name}</td>
 						<td>${article.hit}</td>

@@ -31,7 +31,7 @@ public class ReboardDaoImpl implements ReboardDao {
 			StringBuilder sql = new StringBuilder();
 			sql.append("select a.*\n");
 			sql.append("from (\n");
-			sql.append("        select RANK() OVER(ORDER BY b.seq DESC ) rank,\n");
+			sql.append("        select RANK() OVER(ORDER BY r.ref DESC, r.step) rank,\n");
 			sql.append("                b.seq, b.name, b.id, b.email, b.subject, b.content, b.hit, b.bcode,\n");
 			sql.append("                case when trunc(b.logtime, 'dd')=trunc(sysdate, 'dd')\n");
 			sql.append("                       then to_char(b.logtime, 'hh24:mi:ss')\n");
