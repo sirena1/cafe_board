@@ -14,11 +14,11 @@ public class ReboardGetArticleAction implements Action {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String act = request.getParameter("act");
+		String path = act.equals("mvmodify") ? "modify" : "reply";
 		int seq = Integer.parseInt(request.getParameter("seq"));
 		ReboardDto reboardDto = ReboardServiceImpl.getReboardService().getArticle(seq);
 		request.setAttribute("article", reboardDto);
-		return "/reboard/modify.jsp";
+		return "/reboard/" + path + ".jsp";
 	}
-
 }
-

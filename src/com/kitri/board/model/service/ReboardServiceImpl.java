@@ -45,7 +45,11 @@ public class ReboardServiceImpl implements ReboardService {
 
 	@Override
 	public int replyArticle(ReboardDto reboardDto) {
-		return 0;
+		int seq = CommonServiceImpl.getCommonService().getNextSeq();
+		//답글일 떄는 원글의 ref랑 같다
+		reboardDto.setSeq(seq);
+		int cnt = ReboardDaoImpl.getReboardDao().replyArticle(reboardDto);
+		return cnt != 0? seq : 0;
 	}
 
 	@Override

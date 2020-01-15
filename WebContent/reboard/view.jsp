@@ -41,6 +41,12 @@ $(document).ready(function () {
 		$("#commonform").submit(); 
 	});
 	
+	$("#reBtn").click(function() {
+		$("#act").val("mvreply");
+		var input = $('<input>').attr('type', 'hidden').attr('name', 'seq').attr('value', '${article.seq}');
+		$('#commonform').append(input).submit();
+	});
+	
 	$("#mvModifyBtn").click(function() {
 		$("#act").val("mvmodify");
 		var input = $('<input>').attr('type', 'hidden').attr('name', 'seq').attr('value', '${article.seq}');

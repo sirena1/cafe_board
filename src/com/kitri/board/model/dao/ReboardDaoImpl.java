@@ -125,7 +125,69 @@ public class ReboardDaoImpl implements ReboardDao {
 
 	@Override
 	public int replyArticle(ReboardDto reboardDto) {
-		return 0;
+		int cnt = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DBConnection.getConnection();
+			conn.setAutoCommit(false); //자동커밋되기 때문에 중간에 에러가 날경우 문제발생!! false로 자동커밋 막기
+			
+			StringBuilder update_step = new StringBuilder();
+			update_step.append("update reboard \n");
+			update_step.append("set step = step + 1 \n");
+			update_step.append("where ref = ? and step > ?");
+			pstmt = conn.prepareStatement(update_step.toString());
+			pstmt.setInt(1, reboardDto.getRef());
+			pstmt.setInt(2, reboardDto.getStep());
+			pstmt.executeUpdate();
+			pstmt.close();
+			
+			StringBuilder insert_reply = new StringBuilder();
+			insert_reply.append("insert all \n");
+			insert_reply.append("	into board (seq, id, name, email, subject, content, hit, logtime, bcode) \n");
+			insert_reply.append("	values (?, ?, ?, ?, ?, ?, 0, sysdate, ?) \n");
+			insert_reply.append("	into reboard (rseq, seq, ref, lev, step, pseq, reply) \n");
+			insert_reply.append("	values (reboard_seq.nextval, ?, ?, ?, ?, ?, 0) \n");
+			insert_reply.append("select * from dual \n");
+			pstmt = conn.prepareStatement(insert_reply.toString());			
+			int idx = 0;
+			pstmt.setInt(++idx, reboardDto.getSeq());
+			pstmt.setString(++idx, reboardDto.getId());
+			pstmt.setString(++idx, reboardDto.getName());
+			pstmt.setString(++idx, reboardDto.getEmail());
+			pstmt.setString(++idx, reboardDto.getSubject());
+			pstmt.setString(++idx, reboardDto.getContent());
+			pstmt.setInt(++idx, reboardDto.getBcode());
+			pstmt.setInt(++idx, reboardDto.getSeq());
+			pstmt.setInt(++idx, reboardDto.getRef());
+			pstmt.setInt(++idx, reboardDto.getLev() + 1);
+			pstmt.setInt(++idx, reboardDto.getStep() + 1);
+			pstmt.setInt(++idx, reboardDto.getPseq());
+			pstmt.executeUpdate();
+			pstmt.close();
+			
+			StringBuilder update_reply = new StringBuilder();
+			update_reply.append("update reboard \n");
+			update_reply.append("set reply = reply + 1 \n");
+			update_reply.append("where seq = ?"); //글번호가 원글의 글번호인 것을 +1 증가
+			pstmt = conn.prepareStatement(update_reply.toString());
+			pstmt.setInt(1, reboardDto.getPseq());
+			pstmt.executeUpdate();
+			
+			conn.commit();
+			cnt = 1; //commit이 error가 나지 않았다!! 성공했을때 1을 return
+		} catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				if(conn != null)
+					conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		} finally {
+			DBClose.close(conn, pstmt);
+		}
+		return cnt;
 	}
 
 	@Override
