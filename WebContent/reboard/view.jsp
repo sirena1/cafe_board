@@ -111,6 +111,12 @@ $(document).ready(function () {
 		    }
 		});
 	});
+	
+	$(document).on("click", ".mmodifyBtn", function() {
+		var mseq = $(this).attr("data-mseq");
+		$("#div" + mseq).css("display", "none");
+		$("#mdiv" + mseq).css("display", "");
+	});
 });
 
 function makeList(data){ //data가 json이다.
@@ -122,14 +128,14 @@ function makeList(data){ //data가 json이다.
     	list += '	<label class="comment_bar">';
     	list += mlist[i].name + ' (' + mlist[i].mtime + ')';
     	if('${userInfo.id}' == mlist[i].id){
-    		list += '<a href="#" class="mmodifyBtn"">수정</a>';
+    		list += '<a href="#" class="mmodifyBtn" data-mseq="' + mlist[i].mseq +'">수정</a>';
     		list += '<a href="#" class="mdeleteBtn" data-mseq="' + mlist[i].mseq +'">삭제</a>';
     	}
     	list += '</label>';
     	list += '	<label class="comment">' + mlist[i].mcontent + '</label>';
     	list += '</div>';
     	
-    	list += '<div id="mdiv' + mlist[i].mseq + '">';
+    	list += '<div id="mdiv' + mlist[i].mseq + '" style="display: none">';
     	list += '<div class="input-group" align="left">';
     	list += '<textarea class="form-control" rows="3" id="mcontent' + mlist[i].mseq + '">' + mlist[i].mcontent +'</textarea>';
     	list += '<button type="button" class="btn btn-secondary modify">수정</button>';
