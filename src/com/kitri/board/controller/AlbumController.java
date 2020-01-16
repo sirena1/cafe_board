@@ -24,7 +24,7 @@ public class AlbumController extends HttpServlet {
 		String path = "/index.jsp";
 		
 		String act = request.getParameter("act");
-		System.out.println("<>>>>>>>>>>>>><<<<<<< " + act);
+//		System.out.println("<>>>>>>>>>>>>><<<<<<< " + act);
 		
 		if("list".equals(act)) {
 			path = BoardActionFactory.getAlbumListAction().execute(request, response);
@@ -32,27 +32,11 @@ public class AlbumController extends HttpServlet {
 		} else if("mvwrite".equals(act)) {
 			path = "/album/write.jsp" + queryString;
 			MovePage.redirect(request, response, path);
-		} else if("write".equals(act)) {
-			path = BoardActionFactory.getAlbumWriteAction().execute(request, response);
-			if(path.contains("writeok")) {
-				path += queryString;
-				MovePage.forward(request, response, path);
-			} else {
-				MovePage.redirect(request, response, path);
-			}
 		} else if("view".equals(act)) {
 			path = BoardActionFactory.getAlbumViewAction().execute(request, response);
 			path += queryString;
 			MovePage.forward(request, response, path);
 		} else if("mvmodify".equals(act)) {
-			path = BoardActionFactory.getAlbumGetArticleAction().execute(request, response);
-			path += queryString;
-			MovePage.forward(request, response, path);
-		} else if("modify".equals(act)) {
-			path = BoardActionFactory.getAlbumModifyAction().execute(request, response);
-			path += queryString;
-			MovePage.forward(request, response, path);
-		} else if("mvreply".equals(act)) {
 			path = BoardActionFactory.getAlbumGetArticleAction().execute(request, response);
 			path += queryString;
 			MovePage.forward(request, response, path);

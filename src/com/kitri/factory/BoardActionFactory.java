@@ -13,17 +13,13 @@ public class BoardActionFactory {
 	private static Action albumDeleteAction;
 	private static Action albumGetArticleAction;
 	private static Action albumListAction;
-	private static Action albumModifyAction;
 	private static Action albumViewAction;
-	private static Action albumWriteAction;
 	
 	//Bbs Action
 	private static Action bbsDeleteAction;
 	private static Action bbsGetArticleAction;
 	private static Action bbsListAction;
-	private static Action bbsModifyAction;
 	private static Action bbsViewAction;
-	private static Action bbsWriteAction;
 	
 	//Board Action
 	private static Action boardDeleteAction;
@@ -53,24 +49,21 @@ public class BoardActionFactory {
 		albumDeleteAction = new AlbumDeleteAction();
 		albumGetArticleAction = new AlbumGetArticleAction();
 		albumListAction = new AlbumListAction();
-		albumModifyAction = new AlbumModifyAction();
 		albumViewAction = new AlbumViewAction();
-		albumWriteAction = new AlbumWriteAction();
 		
 		bbsDeleteAction = new BbsDeleteAction();
 		bbsGetArticleAction = new BbsGetArticleAction();
 		bbsListAction = new BbsListAction();
-		bbsModifyAction = new BbsModifyAction();
+	
 		bbsViewAction = new BbsViewAction();
-		bbsWriteAction = new BbsWriteAction();
+
 		
 		boardDeleteAction = new BoardDeleteAction();
 		boardGetArticleAction = new BoardGetArticleAction();
 		boardListAction = new BoardListAction();
 		boardModifyAction = new BoardModifyAction();
 		bbsViewAction = new BbsViewAction();
-		bbsWriteAction = new BbsWriteAction();
-		
+	
 		reboardDeleteAction = new ReboardDeleteAction();
 		reboardGetArticleAction = new ReboardGetArticleAction();
 		reboardListAction = new ReboardListAction();
@@ -97,17 +90,10 @@ public class BoardActionFactory {
 		return albumListAction;
 	}
 
-	public static Action getAlbumModifyAction() {
-		return albumModifyAction;
-	}
-
 	public static Action getAlbumViewAction() {
 		return albumViewAction;
 	}
 
-	public static Action getAlbumWriteAction() {
-		return albumWriteAction;
-	}
 
 	public static Action getBbsDeleteAction() {
 		return bbsDeleteAction;
@@ -121,17 +107,10 @@ public class BoardActionFactory {
 		return bbsListAction;
 	}
 
-	public static Action getBbsModifyAction() {
-		return bbsModifyAction;
-	}
-
 	public static Action getBbsViewAction() {
 		return bbsViewAction;
 	}
 
-	public static Action getBbsWriteAction() {
-		return bbsWriteAction;
-	}
 
 	public static Action getBoardDeleteAction() {
 		return boardDeleteAction;

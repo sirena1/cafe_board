@@ -9,16 +9,32 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-bs4.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-bs4.min.js"></script>
-
+<script>
+$(document).ready(function () {
+	$("#myArticleBtn").click(function() {
+		$('#act').val('view'); //act 값 setting
+		var input = $('<input>').attr('type','hidden').attr('name','seq').attr('value','${seq}')
+		$('#commonform').append(input).submit();
+		
+	});
+	
+	$("#listBtn").click(function() {
+		$("#act").val("list");
+		$("#pg").val("1"); //1페이지로 보내기
+		$("#key").val("");
+		$("#word").val("");
+		$("#commonform").submit();	
+	});
+});
+</script>
     	<h3 style="padding-left: 15px; padding-bottom: 10px;">글쓰기</h3>
     	<div class="container" style="width: 80%;">
 			
-			글작성 성공
+			글작성 성공 >>>>>>>>>>>>>>>>>>>>>>> ${seq}
 			<br><br>
 	  
       		<button type="button" id="myArticleBtn" class="btn btn-primary">내가쓴글보기</button>
 	  		<button type="button" id="listBtn" class="btn btn-warning">글목록</button>
 		</div>
-
 
 <%@ include file="/template/bottom.jsp" %>

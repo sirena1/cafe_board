@@ -19,7 +19,7 @@ $(document).ready(function(){
 			alert("내용 입력!!!!");
 			return;
 		} else {
-			$("#writeform").attr("action", "${root}/album").submit();
+			$("#writeform").attr("action", "${root}/pictureupload").submit();
 		}
 	});
 });
