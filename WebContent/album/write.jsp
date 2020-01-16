@@ -9,31 +9,58 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-bs4.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-bs4.min.js"></script>
-
-    	<h3 style="padding-left: 15px; padding-bottom: 10px;">글쓰기</h3>
+<script>
+$(document).ready(function(){
+	$("#writeBtn").click(function() {
+		if($("#subject").val() == ''){
+			alert("제목 입력!!!!");
+			return;
+		} else if($("#summernote").val() == ''){
+			alert("내용 입력!!!!");
+			return;
+		} else {
+			$("#writeform").attr("action", "${root}/album").submit();
+		}
+	});
+});
+</script>
+    	<h5 style="padding-left: 15px; padding-bottom: 10px;">글쓰기</h5>
+    	<form id="writeform" method="POST" enctype="multipart/form-data">
+    	<input type="hidden" name="act" value="write">
+    	<input type="hidden" name="bcode" value="${param.bcode}">
+    	<input type="hidden" name="pg" value="1">
+    	<input type="hidden" name="key" value="">
+    	<input type="hidden" name="word" value="">
     	<div class="container" style="width: 80%;">
 			<div class="form-group" align="left" style="margin: 0px;">
-				<select name="cars" class="custom-select mb-3">
-					<option selected>게시판 선택</option>
-			      	<option value="fiat">자유게시판</option>
-			      	<option value="audi">익명게시판</option>
-				</select>
+				
 	   		</div>
 	   		<div class="form-group" align="left">
-				<input type="text" class="form-control" placeholder="제목 입력..." name="title" id="title">
+				<input type="text" class="form-control" placeholder="제목 입력..." name="subject" id="subject">
 	  		</div>
-	  		<div id="summernote"></div>
+	  		<textarea id="summernote" name="content"></textarea>
 	  		<script>
-				$('#summernote').summernote({
-					placeholder: 'Hello Bootstrap 4',
-					tabsize: 2,
-					height: 500
-				});
+	  		$('#summernote').summernote({
+	  	        placeholder: 'Hello stand alone ui',
+	  	        tabsize: 2,
+	  	        height: 120,
+	  	        toolbar: [
+	  	          ['style', ['style']],
+	  	          ['font', ['bold', 'underline', 'clear']],
+	  	          ['color', ['color']],
+	  	          ['para', ['ul', 'ol', 'paragraph']],
+	  	          ['table', ['table']],
+	  	          ['insert', ['link', 'picture', 'video']],
+	  	          ['view', ['fullscreen', 'codeview', 'help']]
+	  	        ]
+	  	      });
     		</script>
-	  
-      		<button type="submit" class="btn btn-primary">글작성</button>
+	  		<div class="form-group" align="left">
+				<input type="file" class="form-control" name="picture" id="picture">
+	  		</div>
+      		<button type="button" id="writeBtn" class="btn btn-primary">글작성</button>
 	  		<button type="reset" class="btn btn-warning">초기화</button>
 		</div>
-
+		</form>
 
 <%@ include file="/template/bottom.jsp" %>

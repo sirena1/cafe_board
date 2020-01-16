@@ -14,8 +14,6 @@ public class ReboardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String root = request.getContextPath();
-		
 		int bcode = ValidateCheck.nullToZero(request.getParameter("bcode"));
 		int pg = ValidateCheck.nullToOne(request.getParameter("pg"));
 		String key = ValidateCheck.nullToBlank(request.getParameter("key"));
