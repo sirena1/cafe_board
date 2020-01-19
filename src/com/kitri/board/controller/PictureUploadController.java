@@ -27,7 +27,7 @@ public class PictureUploadController extends HttpServlet {
 		super.init(config);
 		serverDirectory = config.getServletContext().getRealPath("/upload"); //upload의 실제경로를 얻어내고 싶다.
 //		System.out.println(saveDirectory);
-		maxPostSize = 5 * 1024 * 1024; //5메가로 제한
+		maxPostSize = 5 * 1024 * 1024; //5메가 로 제한
 	}
 
 
