@@ -1,12 +1,11 @@
 package com.kitri.reboard.action;
 
-import java.io.IOException;
+import java.io.*;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.*;
+import javax.servlet.http.*;
 
-import com.kitri.action.Action;
+import com.kitri.action.*;
 import com.kitri.board.model.service.*;
 
 public class ReboardDeleteAction implements Action {
@@ -14,7 +13,9 @@ public class ReboardDeleteAction implements Action {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-	return null;
+		int seq = Integer.parseInt(request.getParameter("seq"));
+		ReboardServiceImpl.getReboardService().deleteArticle(seq);
+		return "/reboard?act=list";
 	}
 
 }

@@ -21,6 +21,8 @@ public class AlbumController extends HttpServlet {
 		String word = ValidateCheck.nullToBlank(request.getParameter("word"));
 		String queryString = "?bcode=" + bcode + "&pg=" + pg + "&key=" + key + "&word=" + Encoder.utfEncode(word);
 		System.out.println("queryString>>>>>>>" + queryString);		
+		String queryStr = "&bcode="+bcode+"&pg="+pg+"&key="+key+"&word="+Encoder.utfEncode(word);
+		
 		String path = "/index.jsp";
 		
 		String act = request.getParameter("act");
@@ -40,6 +42,10 @@ public class AlbumController extends HttpServlet {
 			path = BoardActionFactory.getAlbumGetArticleAction().execute(request, response);
 			path += queryString;
 			MovePage.forward(request, response, path);
+		} else if("delete".equals(act)) {
+			path = BoardActionFactory.getAlbumDeleteAction().execute(request, response);
+			path += queryStr;
+			MovePage.forward(request, response, path);			
 		} else {
 			
 		}

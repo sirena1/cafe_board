@@ -20,6 +20,8 @@ public class ReboardController extends HttpServlet {
 		String word = ValidateCheck.nullToBlank(request.getParameter("word"));
 		String queryString = "?bcode=" + bcode + "&pg=" + pg + "&key=" + key + "&word=" + Encoder.utfEncode(word);
 		System.out.println("queryString>>>>>>>" + queryString);		
+		String queryStr = "&bcode="+bcode+"&pg="+pg+"&key="+key+"&word="+Encoder.utfEncode(word);
+
 		String path = "/index.jsp";
 		
 		String act = request.getParameter("act");
@@ -54,6 +56,10 @@ public class ReboardController extends HttpServlet {
 			path = BoardActionFactory.getReboardGetArticleAction().execute(request, response);
 			path += queryString;
 			MovePage.forward(request, response, path);
+		} else if("delete".equals(act)) {
+			path = BoardActionFactory.getReboardDeleteAction().execute(request, response);
+			path += queryStr;
+			MovePage.forward(request, response, path);			
 		} else if("reply".equals(act)) {
 			path = BoardActionFactory.getReboardReplyAction().execute(request, response);
 			if(path.contains("writeok")) {
@@ -62,10 +68,7 @@ public class ReboardController extends HttpServlet {
 			} else {
 				MovePage.redirect(request, response, path);
 			}
-		} else if("".equals(act)) {
-			
-		}
-		else {
+		} else {
 			
 		}
 	}

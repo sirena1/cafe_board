@@ -259,7 +259,44 @@ public class ReboardDaoImpl implements ReboardDao {
 		return 0;
 	}
 
+//reboard랑 board 둘 다 지워지려면 트랜잭션 처리
 	@Override
 	public void deleteArticle(int seq) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DBConnection.getConnection();
+			conn.setAutoCommit(false); //자동커밋되기 때문에 중간에 에러가 날경우 문제발생!! false로 자동커밋 막기
+			StringBuilder reboardsql = new StringBuilder();
+			reboardsql.append("delete from reBoard \n");
+			reboardsql.append("where seq = ? \n");
+			pstmt = conn.prepareStatement(reboardsql.toString());
+			pstmt.setInt(1, seq);
+			
+			pstmt.executeUpdate();
+			
+			pstmt.close();
+			
+			StringBuilder boardsql = new StringBuilder();
+			boardsql.append("delete from Board \n");
+			boardsql.append("where seq = ? \n");
+			pstmt = conn.prepareStatement(boardsql.toString());
+			pstmt.setInt(1, seq);
+			
+			pstmt.executeUpdate();
+			conn.commit();
+		} catch (SQLException e) {
+			if(conn != null) {
+				try {
+					conn.rollback();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt);
+		}
 	}
+
 }
